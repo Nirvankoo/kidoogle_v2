@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "550675276440",
+    "firebase_url": "https://kidoogle-default-rtdb.firebaseio.com",
+    "project_id": "kidoogle",
+    "storage_bucket": "kidoogle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550675276440:android:ee8a8dfa9a73b73e4b66ed",
+        "android_client_info": {
+          "package_name": "com.nirv.proj1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550675276440-oq2ctn4g3rhi1i33i7n4qki4rmqblocd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nirv.proj1",
+            "certificate_hash": "423d22d98d02d331a83f18bf0e37bc542f4040e6"
+          }
+        },
+        {
+          "client_id": "550675276440-vmouc2asm919t3u1tbirqfmfc46f7qco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_x0nMb_mzCjbeOaiNo4WNE-jWZXB-DQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550675276440-vmouc2asm919t3u1tbirqfmfc46f7qco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
