@@ -13,22 +13,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kidoogle"
         tools:targetApi="31">
-
         <activity
-            android:name="com.nirv.proj1.SplashScreen"
-            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            >
-
-
+            android:name=".MainActivity4"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity3"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".Subscription"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".SplashScreen"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.nirv.proj1.MainActivity"
+            android:name=".MainActivity"
             android:exported="false" />
     </application>
 

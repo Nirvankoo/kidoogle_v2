@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2"
+    android:background="@drawable/bg1">
+
+
+
+    <TextView
+        android:id="@+id/enterNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter your name"
+        android:textSize="24sp"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.171"
+        android:fontFamily="@font/cheflat"
+        android:visibility="visible"
+        tools:visibility="visible"
+        />
+
+    <TextView
+        android:id="@+id/enterAgeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cheflat"
+        android:text="Please enter your age"
+        android:textColor="@color/blue"
+        android:textSize="24dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.389"
+        tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/nameTxt"
+        android:layout_width="205dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/cheflat"
+        android:gravity="center"
+        android:hint="your name"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterNameTxt"
+        app:layout_constraintVertical_bias="0.069"
+
+        tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/ageTxt"
+        android:layout_width="205dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/cheflat"
+        android:gravity="center"
+        android:hint="your age"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterNameTxt"
+        app:layout_constraintVertical_bias="0.36"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/next_name_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cheflat"
+        android:text="continue"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTxt"
+        app:layout_constraintVertical_bias="0.754"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

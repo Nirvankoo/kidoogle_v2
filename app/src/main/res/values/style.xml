@@ -1,0 +1,11 @@
+
+
+    <resources xmlns:tools="http://schemas.android.com/tools">
+        <style name="AppTheme.ButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+
+            <item name="android:background">@drawable/bg1</item>
+            <item name="backgroundTint">@color/blue</item>
+
+        </style>
+
+    </resources>

@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             GoogleSignInAccount acct = result.getSignInAccount();
             Log.d(TAG, "Google Sign-In successful. Account name: " + acct.getDisplayName());
             Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(MainActivity.this, Subscription.class));
             // Start another activity or perform an action after successful sign-in
             // For example:
             // startActivity(new Intent(MainActivity.this, SomeActivity.class));
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             // Google sign-in failed
             Log.e(TAG, "Sign-in failed. Status code: " + result.getStatus().getStatusCode());
+          
             Toast.makeText(this, "Sign-in failed. Please try again.", Toast.LENGTH_SHORT).show();
             // Handle sign-in failure, such as displaying an error message to the user.
         }
