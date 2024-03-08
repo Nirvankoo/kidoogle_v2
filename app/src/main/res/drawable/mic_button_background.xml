@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background shape -->
+    <item>
+        <shape android:shape="oval">
+            <!-- Define your background color or image -->
+            <solid android:color="#FFFFFF" /> <!-- Example: Red color -->
+        </shape>
+    </item>
+
+    <!-- Mic icon -->
+    <item android:drawable="@drawable/mic"
+        android:gravity="center" />
+
+</layer-list>

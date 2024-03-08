@@ -7,7 +7,6 @@
     android:background="@drawable/bg1">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -18,30 +17,34 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        />
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <Button
-        android:id="@+id/voice_ipa_button"
+        android:id="@+id/voiceIPIbutton"
         style="@style/AppTheme.ButtonStyle"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:background="@drawable/voice_api_button_background"
-        android:text="Button"
+        android:background="@drawable/mic"
+        android:contentDescription="@string/app_name"
+        android:enabled="true"
+        android:text=""
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.907"
-        tools:ignore="OverlappingViews"
-        />
+        app:layout_constraintVertical_bias="0.904"
+        tools:ignore="OverlappingViews,VisualLintOverlap"
+        tools:visibility="visible" />
 
     <ImageView
 
-        android:id="@+id/voice_ipa_imageview"
+        android:id="@+id/voiceIPAimageView"
         android:layout_width="125dp"
         android:layout_height="125dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -49,8 +52,98 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.905"
         app:srcCompat="@drawable/voice_api_button_background"
-        tools:ignore="OverlappingViews"
-        />
+        tools:ignore="OverlappingViews" />
 
+    <TextView
+        android:id="@+id/userGreetinTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cheflat"
+        android:text="Greeting text"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/voiceIPAimageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.065"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/userQuestionConfirmButtonYes"
+        android:backgroundTint="@color/purple_500"
+        android:background="@drawable/circle"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/cheflat"
+        android:text="YES"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/voiceIPIbutton"
+        app:layout_constraintEnd_toStartOf="@+id/userQuestionConfirmButtonNo"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintStart_toStartOf="@+id/userQuestionConfirmTextView"
+        app:layout_constraintTop_toBottomOf="@+id/userQuestionConfirmTextView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/userQuestionConfirmButtonNo"
+        android:backgroundTint="@color/purple_500"
+        android:background="@drawable/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/cheflat"
+        android:text="NO"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/voiceIPIbutton"
+        app:layout_constraintEnd_toEndOf="@+id/userQuestionConfirmTextView"
+        app:layout_constraintTop_toBottomOf="@+id/userQuestionConfirmTextView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/userQuestionConfirmTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="344dp"
+        android:layout_marginBottom="275dp"
+        android:fontFamily="@font/cheflat"
+        android:text="Is question correct?"
+        android:textColor="@color/purple_700"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.256"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/userAnswerToQuestionTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:contentDescription="answer"
+        android:fadeScrollbars="false"
+        android:fontFamily="@font/cheflat"
+        android:gravity="top|start"
+        android:maxLines="21"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        android:text="answer"
+        android:textColor="@color/purple_700"
+        android:textSize="18dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,72 +1,113 @@
+// MainActivity4.java
 package com.nirv.proj1;
 
-import androidx.appcompat.app.AppCompatActivity;
+import static com.nirv.proj1.MainActivity2._userName;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ImageView; // Import ImageView
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity4 extends AppCompatActivity {
 
-    private boolean statusAnimation = false;
-    private Handler handlerAnimation = new Handler();
+    private MenuHandler menuHandler;
+    private Button voiceIPIbutton;
+    private ImageView imgVoiceIPIbutton;
+    private TextView userGreetingTV;
+    private TextView userAnswerToQuestionTV;
+    private VoiceAPIHandler voiceAPIHandler;
 
-    Button voiceAPIbutton;
-    ImageView imgAnimation; // Declare ImageView
+   //Comfirmation of corectness of recognized voice IPI
+    public TextView userQuestionConfirmTextView;
+    public Button userQuestionConfirmButtonYes;
+    public Button userQuestionConfirmButtonNo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main4);
 
-        voiceAPIbutton = findViewById(R.id.voice_ipa_button);
-        imgAnimation = findViewById(R.id.voice_ipa_imageview); // Initialize ImageView
+        menuHandler = new MenuHandler(this); // Pass context to MenuHandler constructor
 
-        voiceAPIbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle animation status
-                statusAnimation = !statusAnimation;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-                // Start or stop animation based on status
-                if (statusAnimation) {
-                    startAnimation();
-                } else {
-                    stopAnimation();
-                }
-            }
-        });
+        voiceIPIbutton = findViewById(R.id.voiceIPIbutton);
+        imgVoiceIPIbutton = findViewById(R.id.voiceIPAimageView);
+        userQuestionConfirmTextView = findViewById(R.id.userAnswerToQuestionTV);
+
+        // Set greeting text and Answer
+        userGreetingTV = findViewById(R.id.userGreetinTV);
+        userGreetingTV.setText("Hello, " + _userName);
+        userAnswerToQuestionTV = findViewById(R.id.userAnswerToQuestionTV);
+        userQuestionConfirmTextView = findViewById(R.id.userQuestionConfirmTextView);
+        userQuestionConfirmButtonYes = findViewById(R.id.userQuestionConfirmButtonYes);
+        userQuestionConfirmButtonNo = findViewById(R.id.userQuestionConfirmButtonNo);
+
+        // Create an instance of VoiceAPIHandler
+        voiceAPIHandler = new VoiceAPIHandler(this, userGreetingTV, userQuestionConfirmTextView, userQuestionConfirmButtonYes, userQuestionConfirmButtonNo);
+
+        // Set OnClickListener to voiceIPIbutton
+        OnClickListenerVoiceIPIbutton clickListenerVoiceIPIbutton = new OnClickListenerVoiceIPIbutton(
+                voiceIPIbutton,
+                imgVoiceIPIbutton,
+                userGreetingTV,
+                userQuestionConfirmTextView,
+                userQuestionConfirmButtonYes,
+                userQuestionConfirmButtonNo
+        );
+
+        // Set the OnClickListener to the button
+        voiceIPIbutton.setOnClickListener(clickListenerVoiceIPIbutton);
+
+        OnClickListenerUserQuestionConfirmButtons userConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
+                userQuestionConfirmButtonYes,
+                userQuestionConfirmButtonNo,
+                this
+
+        );
+
+        userQuestionConfirmButtonYes.setOnClickListener(userConfirmButtons);
+        userQuestionConfirmButtonNo.setOnClickListener(userConfirmButtons);
+
+
+
+
+
+
     }
 
-    private void startAnimation() {
-        // Example animation
-        imgAnimation.animate()
-                .scaleX(1.5f)
-                .scaleY(1.5f)
-                .alpha(0.3f)
-                .setDuration(300) // Set duration to 1000 milliseconds (1 second)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        stopAnimation(); // Call stopAnimation() after the animation duration
-                    }
-                })
-                .start();
 
-        // You can add more animation here if needed
+
+
+
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return menuHandler.onCreateOptionsMenu(menu);
     }
 
-    private void stopAnimation() {
-        // Reset image properties to their original state
-        imgAnimation.animate()
-                .scaleX(1f)  // Set original scale X
-                .scaleY(1f)  // Set original scale Y
-                .alpha(0f)   // Set original alpha
-                .setDuration(0)  // No duration for resetting
-                .start();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return menuHandler.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Pass the result to the VoiceAPIHandler instance
+        voiceAPIHandler.handleActivityResult(requestCode, resultCode, data);
+    }
 }
