@@ -29,6 +29,9 @@ public class MainActivity4 extends AppCompatActivity {
     public TextView userQuestionConfirmTextView;
     public Button userQuestionConfirmButtonYes;
     public Button userQuestionConfirmButtonNo;
+    private String answer;
+
+    private TextView answerFromGPT;
 
 
     @Override
@@ -43,15 +46,17 @@ public class MainActivity4 extends AppCompatActivity {
 
         voiceIPIbutton = findViewById(R.id.voiceIPIbutton);
         imgVoiceIPIbutton = findViewById(R.id.voiceIPAimageView);
-        userQuestionConfirmTextView = findViewById(R.id.userAnswerToQuestionTV);
+
 
         // Set greeting text and Answer
         userGreetingTV = findViewById(R.id.userGreetinTV);
+
         userGreetingTV.setText("Hello, " + _userName);
-        userAnswerToQuestionTV = findViewById(R.id.userAnswerToQuestionTV);
+
         userQuestionConfirmTextView = findViewById(R.id.userQuestionConfirmTextView);
         userQuestionConfirmButtonYes = findViewById(R.id.userQuestionConfirmButtonYes);
         userQuestionConfirmButtonNo = findViewById(R.id.userQuestionConfirmButtonNo);
+        answerFromGPT = findViewById(R.id.answerFromGPT);
 
         // Create an instance of VoiceAPIHandler
         voiceAPIHandler = new VoiceAPIHandler(this, userGreetingTV, userQuestionConfirmTextView, userQuestionConfirmButtonYes, userQuestionConfirmButtonNo);
@@ -69,15 +74,17 @@ public class MainActivity4 extends AppCompatActivity {
         // Set the OnClickListener to the button
         voiceIPIbutton.setOnClickListener(clickListenerVoiceIPIbutton);
 
-        OnClickListenerUserQuestionConfirmButtons userConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
+        OnClickListenerUserQuestionConfirmButtons userQuestionConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
                 userQuestionConfirmButtonYes,
                 userQuestionConfirmButtonNo,
-                this
+                this,
+                userGreetingTV,
+                answerFromGPT
 
         );
 
-        userQuestionConfirmButtonYes.setOnClickListener(userConfirmButtons);
-        userQuestionConfirmButtonNo.setOnClickListener(userConfirmButtons);
+        userQuestionConfirmButtonYes.setOnClickListener(userQuestionConfirmButtons);
+        userQuestionConfirmButtonNo.setOnClickListener(userQuestionConfirmButtons);
 
 
 

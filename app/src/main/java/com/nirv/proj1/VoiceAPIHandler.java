@@ -63,9 +63,6 @@ public class VoiceAPIHandler {
                     userQuestionConfirmTextView.setVisibility(View.VISIBLE);
                     userQuestionConfirmButtonYes.setVisibility(View.VISIBLE);
                     userQuestionConfirmButtonNo.setVisibility(View.VISIBLE);
-
-
-
                 }
             }
         }
