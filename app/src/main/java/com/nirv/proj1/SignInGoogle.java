@@ -1,6 +1,8 @@
 package com.nirv.proj1;
 
 import android.content.Context;
+import android.util.Log;
+
 import androidx.fragment.app.FragmentActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -9,10 +11,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignInGoogle {
 
-    private FirebaseAuth auth;
     private Context context;
 
     public SignInGoogle(Context context) {
@@ -33,6 +35,8 @@ public class SignInGoogle {
                 // Add any additional scopes if needed
                 .requestScopes(new Scope("profile")) // Example: requesting profile scope
                 .build();
+
+        // Get FirebaseUser
 
         return new GoogleApiClient.Builder(context)
                 .enableAutoManage((FragmentActivity) context, (GoogleApiClient.OnConnectionFailedListener) context)

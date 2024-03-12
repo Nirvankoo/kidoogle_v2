@@ -2,6 +2,8 @@ package com.nirv.proj1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    public static FirebaseUser firebaseUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +45,35 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Build GoogleApiClient
         buildGoogleApiClient();
 
+
+        signIn();
+
+
         // Add AuthStateListener to monitor authentication state changes
         auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                //TODO
+                //continue to get currenUser
+
+
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     // You can perform additional actions here, such as updating UI elements or accessing authenticated resources
+                    Log.d("user:", String.valueOf(user));
+                    Log.d("user:", user.getUid());
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+
                     // You can perform additional actions here, such as navigating to a sign-in screen
                 }
             }
         });
 
-        signIn();
+
     }
 
     private void buildGoogleApiClient() {
@@ -108,13 +122,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             // startActivity(new Intent(MainActivity.this, SomeActivity.class));
             System.out.println("You logged in");
 
+
+
             // Get FirebaseUser
-            FirebaseUser currentUser = auth.getCurrentUser();
-            if (currentUser != null) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("user:", String.valueOf(user));
+
+
+
+
+
+           // Log.d("firebaseUser", String.valueOf(firebaseUser));
+            //Log.d("acct:", acct.getDisplayName().toString());
+            if (user != null) {
                 // User is signed in
                 // Do something with the current user, such as storing it in SharedPreferences or displaying user information
-                firebaseUser = currentUser;
-                Log.d("firebaseUser:", firebaseUser.toString().trim());
+
             } else {
                 // Handle the case where currentUser is null, maybe show a message or retry sign-in
                 Log.d(TAG, "FirebaseUser is null");

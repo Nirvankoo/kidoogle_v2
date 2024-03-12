@@ -5,6 +5,7 @@ import static com.nirv.proj1.MainActivity2._userName;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -15,6 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity4 extends AppCompatActivity {
 
@@ -33,6 +37,11 @@ public class MainActivity4 extends AppCompatActivity {
 
     private TextView answerFromGPT;
 
+    //FirebaseUser!!!!!!!!
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +53,27 @@ public class MainActivity4 extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         voiceIPIbutton = findViewById(R.id.voiceIPIbutton);
         imgVoiceIPIbutton = findViewById(R.id.voiceIPAimageView);
+
+        //FirebaseUSer!!!!!!!!!!!!!!!
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        if (firebaseUser != null) {
+            // User is authenticated, create a User object
+            User user = new User(firebaseAuth, firebaseUser);
+        } else {
+            // User is not authenticated
+            Log.d("User", "User is not authenticated");
+        }
+
+        User user = new User(firebaseAuth, firebaseUser);
+
+
+
 
 
         // Set greeting text and Answer
@@ -85,6 +113,15 @@ public class MainActivity4 extends AppCompatActivity {
 
         userQuestionConfirmButtonYes.setOnClickListener(userQuestionConfirmButtons);
         userQuestionConfirmButtonNo.setOnClickListener(userQuestionConfirmButtons);
+
+
+
+
+
+
+
+
+
 
 
 
