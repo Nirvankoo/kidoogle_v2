@@ -1,4 +1,3 @@
-// MainActivity4.java
 package com.nirv.proj1;
 
 import static com.nirv.proj1.MainActivity2._userName;
@@ -12,9 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +28,7 @@ public class MainActivity4 extends AppCompatActivity {
     private TextView userAnswerToQuestionTV;
     private VoiceAPIHandler voiceAPIHandler;
 
-   //Comfirmation of corectness of recognized voice IPI
+    // Confirmation of correctness of recognized voice IPI
     public TextView userQuestionConfirmTextView;
     public Button userQuestionConfirmButtonYes;
     public Button userQuestionConfirmButtonNo;
@@ -37,11 +36,11 @@ public class MainActivity4 extends AppCompatActivity {
 
     private TextView answerFromGPT;
 
-    //FirebaseUser!!!!!!!!
+    // FirebaseUser
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
 
-
+    private GPTHandler gptHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +52,11 @@ public class MainActivity4 extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         voiceIPIbutton = findViewById(R.id.voiceIPIbutton);
         imgVoiceIPIbutton = findViewById(R.id.voiceIPAimageView);
 
-        //FirebaseUSer!!!!!!!!!!!!!!!
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
 
         if (firebaseUser != null) {
             // User is authenticated, create a User object
@@ -72,14 +68,8 @@ public class MainActivity4 extends AppCompatActivity {
 
         User user = new User(firebaseAuth, firebaseUser);
 
-
-
-
-
-        // Set greeting text and Answer
+        // Set greeting text
         userGreetingTV = findViewById(R.id.userGreetingTV);
-
-
         userGreetingTV.setText("Good day, " + _userName + " now you can ask me anything! :)");
 
         userQuestionConfirmTextView = findViewById(R.id.userQuestionConfirmTextView);
@@ -104,28 +94,20 @@ public class MainActivity4 extends AppCompatActivity {
         // Set the OnClickListener to the button
         voiceIPIbutton.setOnClickListener(clickListenerVoiceIPIbutton);
 
+        gptHandler = new GPTHandler(""); // Initialize GPTHandler
+
         OnClickListenerUserQuestionConfirmButtons userQuestionConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
                 userQuestionConfirmButtonYes,
                 userQuestionConfirmButtonNo,
                 this,
                 userGreetingTV,
-                answerFromGPT
-
+                answerFromGPT,
+                gptHandler // Pass GPTHandler instance
         );
 
         userQuestionConfirmButtonYes.setOnClickListener(userQuestionConfirmButtons);
         userQuestionConfirmButtonNo.setOnClickListener(userQuestionConfirmButtons);
-
-
     }
-
-
-
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -26,22 +26,21 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class GPTRequestHandler {
+public class GPTHandler {
 
     private static final String GPT_API_URL = "https://api.openai.com/v1/chat/completions";
     private static String API_KEY = null;
 
-    private static String question;
+    private String speech;
+    private String answer;
 
-    private static RequestCount requestCount = new RequestCount();
+    private RequestCount requestCount = new RequestCount();
 
-    // Constructor to retrieve API key from Firebase Realtime Database
-    public GPTRequestHandler(String question) {
-        this.question = question;
+    public GPTHandler(String speech) {
+        this.speech = speech;
         retrieveApiKeyFromFirebase();
     }
 
-    // Method to retrieve API key from Firebase
     private void retrieveApiKeyFromFirebase() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("apiKeys/openai/apiKey");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -49,41 +48,36 @@ public class GPTRequestHandler {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 API_KEY = dataSnapshot.getValue(String.class);
                 Log.d("API_KEY", "API Key: " + API_KEY);
-                // Once API key is retrieved, send GPT request
                 if (API_KEY != null) {
                     try {
-                        sendGPTRequest(question, new GPTResponseListener() {
+                        sendGPTRequest(speech, new GPTResponseListener() {
                             @Override
                             public void onResponse(String response) {
-                                // Handle response
+                                Log.d("GPT Response", response);
+                                answer = response; // Save the response
                             }
 
                             @Override
                             public void onError(String error) {
-                                // Handle error
+                                Log.e("GPT Error", error);
                             }
                         });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    // Handle case where API key is null
                     Log.e("API_KEY", "API key is null");
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Handle errors in retrieving data from Firebase
                 Log.e("Firebase", "Error retrieving API key: " + databaseError.getMessage());
             }
         });
     }
 
-    // Method to send GPT request using the retrieved API key
-    public static void sendGPTRequest(String speech, final GPTResponseListener listener) throws JSONException {
-
+    public void sendGPTRequest(String speech, final GPTResponseListener listener) throws JSONException {
         try {
             requestCount.incrementRequestCount();
         } catch (Exception e) {
@@ -109,7 +103,7 @@ public class GPTRequestHandler {
 
         JSONObject userMessage = new JSONObject();
         userMessage.put("role", "user");
-        userMessage.put("content", speech); // Set the content to the recognized speech
+        userMessage.put("content", speech);
         messagesArray.put(userMessage);
 
         requestBody.put("messages", messagesArray);
@@ -135,14 +129,9 @@ public class GPTRequestHandler {
 
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseBody = response.body().string();
-                //Log.d("Request Body", String.valueOf(request));// Print the request body to Logcat
-                //Log.d("JSON Response", responseBody);
-
-                // Post UI updates to the main thread
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        // Parse the JSON response and handle accordingly
                         try {
                             JSONObject jsonObject = new JSONObject(responseBody);
                             JSONArray choices = jsonObject.getJSONArray("choices");
@@ -165,11 +154,9 @@ public class GPTRequestHandler {
                     }
                 });
             }
-
         });
     }
 
-    // Interface for response callbacks
     public interface GPTResponseListener {
         void onResponse(String response);
         void onError(String error);

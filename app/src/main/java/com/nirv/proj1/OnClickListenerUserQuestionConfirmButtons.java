@@ -9,24 +9,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 public class OnClickListenerUserQuestionConfirmButtons implements View.OnClickListener {
 
-    private TextView userQuestionConfirmTextView;
     private Button userQuestionConfirmButtonYes;
     private Button userQuestionConfirmButtonNo;
     private TextView userGreetingTV;
-    private String speech;
-    private String answer;
     private TextView answerFromGPT;
     private Activity activity;
+    private GPTHandler gptHandler;
 
     public OnClickListenerUserQuestionConfirmButtons(Button userQuestionConfirmButtonYes, Button userQuestionConfirmButtonNo, Activity activity, TextView userGreetingTV,
-                                                     TextView answerFromGPT) {
+                                                     TextView answerFromGPT, GPTHandler gptHandler) {
         this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
         this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
         this.activity = activity;
         this.userGreetingTV = userGreetingTV;
         this.answerFromGPT = answerFromGPT;
+        this.gptHandler = gptHandler; // Receive the GPTHandler instance
     }
 
     @Override
@@ -34,42 +35,41 @@ public class OnClickListenerUserQuestionConfirmButtons implements View.OnClickLi
         if (v.getId() == R.id.userQuestionConfirmButtonYes) {
             // Show a Toast message when 'Yes' button is clicked
             Toast.makeText(activity, "Yes button clicked", Toast.LENGTH_SHORT).show();
-            speech = userGreetingTV.getText().toString();
-            SendRequestToGPT sendReqGPT = new SendRequestToGPT(speech);
+            String speech = userGreetingTV.getText().toString();
 
+            // Send question to GPT using the GPTHandler instance
+            try {
+                gptHandler.sendGPTRequest(speech, new GPTHandler.GPTResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Log the response
+                        Log.d("GPT Response", response);
 
-            // Send question to GPT
-            sendReqGPT.sendRequestToGPT(new SendRequestToGPT.GPTResponseListener() {
-                @Override
-                public void onResponse(String response) {
-                    // Log the response
-                    Log.d("GPT Response", response);
-
-                    // Update answer TextView
-
-                    new Handler(Looper.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                // Log the text setting process
-                                Log.d("Text Setting", "Setting text to: " + answer);
-
-                                // Set the answer to the TextView
-                                answerFromGPT.setText(response);
-                            } catch (Exception e) {
-                                Log.e("Error", "Error setting text: " + e.getMessage());
+                        // Update answer TextView
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    // Set the answer to the TextView
+                                    answerFromGPT.setVisibility(View.VISIBLE);
+                                    answerFromGPT.setText(response);
+                                    userGreetingTV.setVisibility(View.INVISIBLE);
+                                } catch (Exception e) {
+                                    Log.e("Error", "Error setting text: " + e.getMessage());
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
 
-                }
-
-                @Override
-                public void onError(String error) {
-                    // Handle error
-                    Log.e("GPT Error", error);
-                }
-            });
+                    @Override
+                    public void onError(String error) {
+                        // Handle error
+                        Log.e("GPT Error", error);
+                    }
+                });
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         } else if (v.getId() == R.id.userQuestionConfirmButtonNo) {
             // Show a Toast message when 'No' button is clicked
             Toast.makeText(activity, "No button clicked", Toast.LENGTH_SHORT).show();
