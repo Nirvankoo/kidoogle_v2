@@ -2,7 +2,6 @@
 package com.nirv.proj1;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +18,10 @@ public class OnClickListenerVoiceIPIbutton implements View.OnClickListener {
     private Button userQuestionConfirmButtonYes;
     private Button userQuestionConfirmButtonNo;
 
+    private TextView answerFromGPT;
+
     public OnClickListenerVoiceIPIbutton(Button voiceIPIbutton, ImageView imgVoiceIPIbutton, TextView userGreetingTV, TextView userQuestionConfirmTextView,
-                                         Button userQuestionConfirmButtonYes, Button userQuestionConfirmButtonNo) {
+                                         Button userQuestionConfirmButtonYes, Button userQuestionConfirmButtonNo, TextView answerFromGPT) {
         this.voiceIPIbutton = voiceIPIbutton;
         this.imgVoiceIPIbutton = imgVoiceIPIbutton;
         this.userGreetingTV = userGreetingTV;
@@ -28,7 +29,7 @@ public class OnClickListenerVoiceIPIbutton implements View.OnClickListener {
         this.userQuestionConfirmTextView = userQuestionConfirmTextView;
         this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
         this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
-
+        this.answerFromGPT = answerFromGPT;
 
     }
 

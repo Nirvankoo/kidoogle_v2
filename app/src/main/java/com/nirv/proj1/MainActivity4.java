@@ -77,9 +77,10 @@ public class MainActivity4 extends AppCompatActivity {
 
 
         // Set greeting text and Answer
-        userGreetingTV = findViewById(R.id.userGreetinTV);
+        userGreetingTV = findViewById(R.id.userGreetingTV);
 
-        userGreetingTV.setText("Hello, " + _userName);
+
+        userGreetingTV.setText("Good day, " + _userName + " now you can ask me anything! :)");
 
         userQuestionConfirmTextView = findViewById(R.id.userQuestionConfirmTextView);
         userQuestionConfirmButtonYes = findViewById(R.id.userQuestionConfirmButtonYes);
@@ -96,7 +97,8 @@ public class MainActivity4 extends AppCompatActivity {
                 userGreetingTV,
                 userQuestionConfirmTextView,
                 userQuestionConfirmButtonYes,
-                userQuestionConfirmButtonNo
+                userQuestionConfirmButtonNo,
+                answerFromGPT
         );
 
         // Set the OnClickListener to the button
@@ -113,19 +115,6 @@ public class MainActivity4 extends AppCompatActivity {
 
         userQuestionConfirmButtonYes.setOnClickListener(userQuestionConfirmButtons);
         userQuestionConfirmButtonNo.setOnClickListener(userQuestionConfirmButtons);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

@@ -11,6 +11,10 @@ public class User {
     FirebaseUser firebaseUser;
     private String uid;
     private String email;
+
+    private Integer userAge;
+
+    private String userName;
     private String displayName;
     private String photoUrl;
 

@@ -25,10 +25,6 @@ public class MainActivity3 extends AppCompatActivity {
         greetingTextNextButton = findViewById(R.id.greetingTextNextButton);
 
 
-
-        String username = getString(R.string.userName);
-        greetingTextTextView.setText(getString(R.string.userName, "Hello, " + _userName));
-
         //dalay 3sec
         new Handler().postDelayed(new Runnable() {
             @Override

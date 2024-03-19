@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,22 +26,20 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 public class GPTRequestHandler {
 
     private static final String GPT_API_URL = "https://api.openai.com/v1/chat/completions";
     private static String API_KEY = null;
 
+    private static String question;
 
     private static RequestCount requestCount = new RequestCount();
 
-
     // Constructor to retrieve API key from Firebase Realtime Database
-    public GPTRequestHandler() {
+    public GPTRequestHandler(String question) {
+        this.question = question;
         retrieveApiKeyFromFirebase();
     }
-
-
 
     // Method to retrieve API key from Firebase
     private void retrieveApiKeyFromFirebase() {
@@ -55,7 +52,7 @@ public class GPTRequestHandler {
                 // Once API key is retrieved, send GPT request
                 if (API_KEY != null) {
                     try {
-                        sendGPTRequest("Your speech here", new GPTResponseListener() {
+                        sendGPTRequest(question, new GPTResponseListener() {
                             @Override
                             public void onResponse(String response) {
                                 // Handle response
@@ -73,6 +70,7 @@ public class GPTRequestHandler {
                     // Handle case where API key is null
                     Log.e("API_KEY", "API key is null");
                 }
+
             }
 
             @Override
@@ -86,13 +84,11 @@ public class GPTRequestHandler {
     // Method to send GPT request using the retrieved API key
     public static void sendGPTRequest(String speech, final GPTResponseListener listener) throws JSONException {
 
-
-        try{
+        try {
             requestCount.incrementRequestCount();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         OkHttpClient client = new OkHttpClient();
         Gson gson = new Gson();
@@ -171,13 +167,7 @@ public class GPTRequestHandler {
             }
 
         });
-
-
     }
-
-
-
-
 
     // Interface for response callbacks
     public interface GPTResponseListener {

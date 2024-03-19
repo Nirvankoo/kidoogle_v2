@@ -4,14 +4,14 @@ import org.json.JSONException;
 
 public class SendRequestToGPT {
     private String speech;
-    private String answer;
+    static String answer;
 
     public SendRequestToGPT(String speech) {
         this.speech = speech;
     }
 
-    public void sendRequestToGPT() {
-        GPTRequestHandler gptRequestHandler = new GPTRequestHandler();
+    public void sendRequestToGPT(GPTResponseListener gptResponseListener) {
+        GPTRequestHandler gptRequestHandler = new GPTRequestHandler(speech);
 
 
 
@@ -39,5 +39,11 @@ public class SendRequestToGPT {
     // Method to get the answer
     public String getAnswer() {
         return answer;
+    }
+
+    public interface GPTResponseListener {
+        void onResponse(String response);
+
+        void onError(String error);
     }
 }

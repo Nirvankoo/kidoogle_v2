@@ -55,9 +55,10 @@
         tools:ignore="OverlappingViews" />
 
     <TextView
-        android:id="@+id/userGreetinTV"
+        android:id="@+id/userGreetingTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
         android:fontFamily="@font/cheflat"
         android:text="Greeting text"
         android:textColor="@color/black"

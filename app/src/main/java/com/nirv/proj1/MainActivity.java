@@ -8,13 +8,19 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +33,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
+
+    //sign in with google manual
+
+    SignInButton signInWithGoogle;
+    ImageView logo;
+    private GoogleSignInClient mGoogleSignInClient;
 
 
 
@@ -42,9 +54,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Initialize FirebaseAuth
         auth = FirebaseAuth.getInstance();
 
+        //google
+        signInWithGoogle = findViewById(R.id.googleSignInButton);
+        logo = findViewById(R.id.logo);
+
+        // Build GoogleSignInClient
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         // Build GoogleApiClient
         buildGoogleApiClient();
-
 
         signIn();
 
@@ -96,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // Handle Google Play services connection failed
         Log.d(TAG, "Google Play services connection failed");
+        Toast.makeText(MainActivity.this, "Google Play services connection failed", Toast.LENGTH_SHORT).show();
         // You can handle the connection failure here, such as displaying an error message to the user.
     }
 
@@ -122,31 +145,38 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             // startActivity(new Intent(MainActivity.this, SomeActivity.class));
             System.out.println("You logged in");
 
-
-
             // Get FirebaseUser
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             Log.d("user:", String.valueOf(user));
 
-
-
-
-
            // Log.d("firebaseUser", String.valueOf(firebaseUser));
             //Log.d("acct:", acct.getDisplayName().toString());
-            if (user != null) {
-                // User is signed in
-                // Do something with the current user, such as storing it in SharedPreferences or displaying user information
 
-            } else {
-                // Handle the case where currentUser is null, maybe show a message or retry sign-in
-                Log.d(TAG, "FirebaseUser is null");
-            }
         } else {
             // Google sign-in failed
             Log.e(TAG, "Sign-in failed. Status code: " + result.getStatus().getStatusCode());
             Toast.makeText(this, "Sign-in failed. Please try again.", Toast.LENGTH_SHORT).show();
             // Handle sign-in failure, such as displaying an error message to the user.
+            showSignInButton();
         }
     }
+
+    private void showSignInButton() {
+        // You need to instantiate OnClickListenerSignInGoogleButton again and set it as onClickListener for your signInWithGoogle button
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        signInWithGoogle.setVisibility(View.VISIBLE);
+        logo.setVisibility(View.VISIBLE);
+
+
+        OnClickListenerSignInGoogleButton onClickListenerSignInGoogleButton = new OnClickListenerSignInGoogleButton(mGoogleSignInClient, this);
+
+
+
+        signInWithGoogle.setOnClickListener(onClickListenerSignInGoogleButton);
+    }
+
+
 }

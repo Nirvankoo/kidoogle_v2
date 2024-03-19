@@ -2,4 +2,5 @@
     <string name="app_name">kidoogle</string>
     <string name="userName">%s</string>
     <string name="userAge">%d</string>
+    <string name="promtToAskQuestions">Hello, !</string>"
 </resources>

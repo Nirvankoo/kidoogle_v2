@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.171"
         android:fontFamily="@font/cheflat"
-        android:visibility="visible"
+        android:visibility="invisible"
         tools:visibility="visible"
         />
 
@@ -35,12 +35,13 @@
         android:text="Please enter your age"
         android:textColor="@color/blue"
         android:textSize="24dp"
-        android:visibility="visible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.389"
+        android:visibility="invisible"
         tools:visibility="visible" />
 
     <EditText
@@ -53,13 +54,13 @@
         android:text=""
         android:textColor="@color/blue"
         android:textSize="24sp"
-        android:visibility="visible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterNameTxt"
         app:layout_constraintVertical_bias="0.069"
-
+        android:visibility="invisible"
         tools:visibility="visible" />
 
     <EditText
@@ -74,12 +75,13 @@
         android:text=""
         android:textColor="@color/blue"
         android:textSize="24sp"
-        android:visibility="visible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterNameTxt"
         app:layout_constraintVertical_bias="0.36"
+        android:visibility="invisible"
         tools:visibility="visible" />
 
     <Button
@@ -88,12 +90,32 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/cheflat"
         android:text="continue"
-        android:visibility="visible"
+        android:backgroundTint="@color/blue"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTxt"
         app:layout_constraintVertical_bias="0.754"
+        android:visibility="invisible"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/greetingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="400dp"
+        android:text="Greeting Text"
+        android:textSize="34dp"
+        android:fontFamily="@font/cheflat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
