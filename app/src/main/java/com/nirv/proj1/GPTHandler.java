@@ -1,8 +1,13 @@
 package com.nirv.proj1;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +33,7 @@ import okhttp3.Response;
 
 public class GPTHandler {
 
+    private Context context;
     private static final String GPT_API_URL = "https://api.openai.com/v1/chat/completions";
     private static String API_KEY = null;
 
@@ -36,9 +42,21 @@ public class GPTHandler {
 
     private RequestCount requestCount = new RequestCount();
 
-    public GPTHandler(String speech) {
+    TextView userQuestionConfirmTextView;
+    Button userQuestionConfirmButtonYes;
+    Button userQuestionConfirmButtonNo;
+
+    public GPTHandler(String speech,
+                      TextView userQuestionConfirmTextView,
+                      Button userQuestionConfirmButtonYes,
+                      Button userQuestionConfirmButtonNo,
+                      Context context) {
         this.speech = speech;
         retrieveApiKeyFromFirebase();
+        this.userQuestionConfirmTextView = userQuestionConfirmTextView;
+        this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
+        this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
+        this.context = context;
     }
 
     private void retrieveApiKeyFromFirebase() {
@@ -55,6 +73,7 @@ public class GPTHandler {
                             public void onResponse(String response) {
                                 Log.d("GPT Response", response);
                                 answer = response; // Save the response
+
                             }
 
                             @Override
@@ -141,6 +160,13 @@ public class GPTHandler {
                                 if (message.has("content")) {
                                     String responseMessage = message.getString("content");
                                     listener.onResponse(responseMessage);
+
+                                    userQuestionConfirmTextView.setVisibility(View.INVISIBLE);
+                                    userQuestionConfirmButtonYes.setVisibility(View.INVISIBLE);
+                                    userQuestionConfirmButtonNo.setVisibility(View.INVISIBLE);
+                                    //TODO
+                                    //Ask to play answer
+
                                 } else {
                                     listener.onError("Missing 'content' field in JSON response");
                                 }

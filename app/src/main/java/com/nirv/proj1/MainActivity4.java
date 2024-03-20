@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class MainActivity4 extends AppCompatActivity {
 
     private MenuHandler menuHandler;
     private Button voiceIPIbutton;
-    private ImageView imgVoiceIPIbutton;
+    private ImageView imgVoiceIPIimgButton;
     private TextView userGreetingTV;
     private TextView userAnswerToQuestionTV;
     private VoiceAPIHandler voiceAPIHandler;
@@ -53,7 +54,7 @@ public class MainActivity4 extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         voiceIPIbutton = findViewById(R.id.voiceIPIbutton);
-        imgVoiceIPIbutton = findViewById(R.id.voiceIPAimageView);
+        imgVoiceIPIimgButton = findViewById(R.id.voiceIPAimageView);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -78,12 +79,19 @@ public class MainActivity4 extends AppCompatActivity {
         answerFromGPT = findViewById(R.id.answerFromGPT);
 
         // Create an instance of VoiceAPIHandler
-        voiceAPIHandler = new VoiceAPIHandler(this, userGreetingTV, userQuestionConfirmTextView, userQuestionConfirmButtonYes, userQuestionConfirmButtonNo);
+        voiceAPIHandler = new VoiceAPIHandler(this,
+                userGreetingTV,
+                userQuestionConfirmTextView,
+                userQuestionConfirmButtonYes,
+                userQuestionConfirmButtonNo,
+                answerFromGPT,
+                voiceIPIbutton,
+                imgVoiceIPIimgButton);
 
         // Set OnClickListener to voiceIPIbutton
         OnClickListenerVoiceIPIbutton clickListenerVoiceIPIbutton = new OnClickListenerVoiceIPIbutton(
                 voiceIPIbutton,
-                imgVoiceIPIbutton,
+                imgVoiceIPIimgButton,
                 userGreetingTV,
                 userQuestionConfirmTextView,
                 userQuestionConfirmButtonYes,
@@ -94,7 +102,11 @@ public class MainActivity4 extends AppCompatActivity {
         // Set the OnClickListener to the button
         voiceIPIbutton.setOnClickListener(clickListenerVoiceIPIbutton);
 
-        gptHandler = new GPTHandler(""); // Initialize GPTHandler
+        gptHandler = new GPTHandler("",
+                userQuestionConfirmTextView,
+                userQuestionConfirmButtonYes,
+                userQuestionConfirmButtonNo,
+                this); // Initialize GPTHandler
 
         OnClickListenerUserQuestionConfirmButtons userQuestionConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
                 userQuestionConfirmButtonYes,
@@ -124,5 +136,6 @@ public class MainActivity4 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // Pass the result to the VoiceAPIHandler instance
         voiceAPIHandler.handleActivityResult(requestCode, resultCode, data);
+
     }
 }

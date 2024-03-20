@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
+
     //sign in with google manual
 
     SignInButton signInWithGoogle;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("Activity1", "Entered");
 
         // Initialize Firebase
         FirebaseApp.initializeApp(this);
@@ -78,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 //TODO
                 //continue to get currenUser
-
-
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
+
+
 
                     // You can perform additional actions here, such as navigating to a sign-in screen
                 }
@@ -134,9 +136,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+
         if (result.isSuccess()) {
             // Google sign-in successful
             GoogleSignInAccount acct = result.getSignInAccount();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            Log.d("MainActivity:", "FirebaseUser:" + user);
+
+            //String userUid = user.getUid();
+            //Log.d("MainActivity", userUid);
+
             Log.d(TAG, "Google Sign-In successful. Account name: " + acct.getDisplayName());
             Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this, Subscription.class));
@@ -146,18 +158,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             System.out.println("You logged in");
 
             // Get FirebaseUser
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            Log.d("user:", String.valueOf(user));
 
-           // Log.d("firebaseUser", String.valueOf(firebaseUser));
-            //Log.d("acct:", acct.getDisplayName().toString());
 
         } else {
             // Google sign-in failed
             Log.e(TAG, "Sign-in failed. Status code: " + result.getStatus().getStatusCode());
             Toast.makeText(this, "Sign-in failed. Please try again.", Toast.LENGTH_SHORT).show();
             // Handle sign-in failure, such as displaying an error message to the user.
-            showSignInButton();
+            logo.setVisibility(View.VISIBLE);
+            signInWithGoogle.setVisibility(View.VISIBLE);
+
+
         }
     }
 
@@ -172,9 +183,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
         OnClickListenerSignInGoogleButton onClickListenerSignInGoogleButton = new OnClickListenerSignInGoogleButton(mGoogleSignInClient, this);
-
-
-
         signInWithGoogle.setOnClickListener(onClickListenerSignInGoogleButton);
     }
 

@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class OnClickListenerVoiceIPIbutton implements View.OnClickListener {
     private final Button voiceIPIbutton;
     private boolean voiceIPIbuttonFlag;
-    private final ImageView imgVoiceIPIbutton;
+    private final ImageView voiceIPIimgButton;
     private final TextView userGreetingTV;
     private final VoiceAPIHandler voiceAPIHandler;
     private TextView userQuestionConfirmTextView;
@@ -20,12 +20,24 @@ public class OnClickListenerVoiceIPIbutton implements View.OnClickListener {
 
     private TextView answerFromGPT;
 
-    public OnClickListenerVoiceIPIbutton(Button voiceIPIbutton, ImageView imgVoiceIPIbutton, TextView userGreetingTV, TextView userQuestionConfirmTextView,
-                                         Button userQuestionConfirmButtonYes, Button userQuestionConfirmButtonNo, TextView answerFromGPT) {
+    public OnClickListenerVoiceIPIbutton(Button voiceIPIbutton,
+                                         ImageView imgVoiceIPIbutton,
+                                         TextView userGreetingTV,
+                                         TextView userQuestionConfirmTextView,
+                                         Button userQuestionConfirmButtonYes,
+                                         Button userQuestionConfirmButtonNo,
+                                         TextView answerFromGPT) {
         this.voiceIPIbutton = voiceIPIbutton;
-        this.imgVoiceIPIbutton = imgVoiceIPIbutton;
+        this.voiceIPIimgButton = imgVoiceIPIbutton;
         this.userGreetingTV = userGreetingTV;
-        this.voiceAPIHandler = new VoiceAPIHandler((Activity) voiceIPIbutton.getContext(), userGreetingTV, userQuestionConfirmTextView, userQuestionConfirmButtonYes, userQuestionConfirmButtonNo);
+        this.voiceAPIHandler = new VoiceAPIHandler((Activity) voiceIPIbutton.getContext(),
+                userGreetingTV,
+                userQuestionConfirmTextView,
+                userQuestionConfirmButtonYes,
+                userQuestionConfirmButtonNo,
+                answerFromGPT,
+                voiceIPIbutton,
+                voiceIPIimgButton);
         this.userQuestionConfirmTextView = userQuestionConfirmTextView;
         this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
         this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
@@ -37,7 +49,7 @@ public class OnClickListenerVoiceIPIbutton implements View.OnClickListener {
     public void onClick(View v) {
         // Define what should happen when the button is clicked
         //double-click secure
-        MyViewAnimation voiceIPIanimation = new MyViewAnimation(imgVoiceIPIbutton);
+        MyViewAnimation voiceIPIanimation = new MyViewAnimation(voiceIPIimgButton);
         if(!voiceIPIbuttonFlag) {
             voiceIPIbuttonFlag = true;
             voiceIPIbutton.setEnabled(false);

@@ -18,6 +18,8 @@ public class User {
     private String displayName;
     private String photoUrl;
 
+
+
     public User(FirebaseAuth firebaseAuth, FirebaseUser firebaseUser) {
         this.firebaseAuth = firebaseAuth;
         this.firebaseUser = firebaseUser;

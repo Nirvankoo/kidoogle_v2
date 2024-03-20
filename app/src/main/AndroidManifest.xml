@@ -17,17 +17,26 @@
         android:theme="@style/Theme.Kidoogle"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpMailPassActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginVerCode"
+            android:exported="false" />
+        <activity
+            android:name=".LoginMailPassActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity4"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity3"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity2"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Subscription"
             android:exported="false"
@@ -45,7 +54,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

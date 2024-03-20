@@ -42,6 +42,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        Log.d("Acitivity2", "Entered");
 
         nameTxt = findViewById(R.id.nameTxt);
         ageTxt = findViewById(R.id.ageTxt);
@@ -54,8 +55,7 @@ public class MainActivity2 extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         checkUserNameAgeStatus();
-
-
+        showNameAgePrompt();
 
 
         nextNameButton.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +66,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                 if (name.isEmpty() || ageString.isEmpty()) {
                     Toast.makeText(MainActivity2.this, "Please enter name and age", Toast.LENGTH_SHORT).show();
+                    enterAgeTxt.setVisibility(View.VISIBLE);
                     return;
                 }else{
                     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid());
@@ -135,7 +136,7 @@ public class MainActivity2 extends AppCompatActivity {
                             }, 3000); // Delay for 3 seconds
                         } else {
                             // userName or userAge is null or empty
-
+                            showNameAgePrompt();
                         }
                     } else {
                         showNameAgePrompt();
@@ -159,10 +160,6 @@ public class MainActivity2 extends AppCompatActivity {
 
             userRef.child("userName").setValue(name);
             userRef.child("userAge").setValue(age);
-
-
-
-
 
 
         }

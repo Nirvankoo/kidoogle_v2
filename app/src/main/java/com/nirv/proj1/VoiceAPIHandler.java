@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.Manifest;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -25,13 +26,27 @@ public class VoiceAPIHandler {
     private Button userQuestionConfirmButtonYes;
     private Button userQuestionConfirmButtonNo;
 
-    public VoiceAPIHandler(Activity activity, TextView userGreetingTV, TextView userQuestionConfirmTextView, Button userQuestionConfirmButtonYes,
-                           Button userQuestionConfirmButtonNo) {
+    private Button voiceIPIbutton;
+    private ImageView voiceIPIimgButton;
+
+    private TextView answerFromGPT;
+
+    public VoiceAPIHandler(Activity activity,
+                           TextView userGreetingTV,
+                           TextView userQuestionConfirmTextView,
+                           Button userQuestionConfirmButtonYes,
+                           Button userQuestionConfirmButtonNo,
+                           TextView answerFromGPT,
+                           Button voiceIPIbutton,
+                           ImageView voiceIPIimgButton) {
         this.activity = activity;
         this.userGreetingTV = userGreetingTV;
         this.userQuestionConfirmTextView = userQuestionConfirmTextView;
         this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
         this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
+        this.answerFromGPT = answerFromGPT;
+        this.voiceIPIbutton = voiceIPIbutton;
+        this.voiceIPIimgButton = voiceIPIimgButton;
     }
 
     public void invokeVoiceAPI() {
@@ -41,6 +56,7 @@ public class VoiceAPIHandler {
         } else {
             // Permission already granted, proceed with voice recognition
             startVoiceRecognition();
+
         }
     }
 
@@ -63,6 +79,9 @@ public class VoiceAPIHandler {
                     userQuestionConfirmTextView.setVisibility(View.VISIBLE);
                     userQuestionConfirmButtonYes.setVisibility(View.VISIBLE);
                     userQuestionConfirmButtonNo.setVisibility(View.VISIBLE);
+
+                    voiceIPIbutton.setVisibility(View.INVISIBLE);
+                    voiceIPIimgButton.setVisibility(View.INVISIBLE);
                 }
             }
         }

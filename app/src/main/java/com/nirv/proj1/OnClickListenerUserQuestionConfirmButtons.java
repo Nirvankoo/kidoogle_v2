@@ -54,6 +54,8 @@ public class OnClickListenerUserQuestionConfirmButtons implements View.OnClickLi
                                     answerFromGPT.setVisibility(View.VISIBLE);
                                     answerFromGPT.setText(response);
                                     userGreetingTV.setVisibility(View.INVISIBLE);
+
+
                                 } catch (Exception e) {
                                     Log.e("Error", "Error setting text: " + e.getMessage());
                                 }

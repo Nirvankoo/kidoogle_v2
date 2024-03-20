@@ -34,8 +34,12 @@ public class Subscription extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscription);
 
+        Log.d("Subscription activity", "Entered");
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+
 
         if (firebaseUser != null) {
             checkSubscriptionStatus(new SubscriptionStatusCallback() {
@@ -43,19 +47,26 @@ public class Subscription extends AppCompatActivity {
                 public void onStatusChecked(boolean hasSubscription) {
                     if (hasSubscription) {
                         // Transfer to next activity
+                        Log.d("Subscription", "hasSubscription = true");
                         startActivity(new Intent(Subscription.this, MainActivity2.class));
                         finish(); // Finish this activity to prevent going back
                     } else {
 
+                        Log.d("Subscription", "hasSubscription = false");
                         initializeViews();
                         subImg1.setVisibility(View.VISIBLE);
                         subImg2.setVisibility(View.VISIBLE);
                         subContinueButton.setVisibility(View.VISIBLE);
+
                     }
                 }
             });
         } else {
             // User is not logged in, handle accordingly
+            Log.d("Subscription", "firebaseUser = false");
+            startActivity(new Intent(Subscription.this, SignUpMailPassActivity.class));
+
+
         }
     }
 
