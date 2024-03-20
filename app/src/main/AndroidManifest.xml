@@ -17,11 +17,29 @@
         android:theme="@style/Theme.Kidoogle"
         tools:targetApi="31">
         <activity
+            android:name=".VerificationActivity"
+            android:launchMode="singleTask"
+            android:exported="true">
+
+            <!-- Define the intent filter for the activity -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Define your custom URL scheme and host -->
+                <data
+                    android:scheme="https"
+                    android:host="proj1.page.link"
+                    android:pathPrefix="/kidoogle" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
             android:name=".SignUpMailPassActivity"
             android:exported="false" />
-        <activity
-            android:name=".LoginVerCode"
-            android:exported="false" />
+
         <activity
             android:name=".LoginMailPassActivity"
             android:exported="false" />

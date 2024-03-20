@@ -46,17 +46,20 @@ public class GPTHandler {
     Button userQuestionConfirmButtonYes;
     Button userQuestionConfirmButtonNo;
 
+    TextView answerFromGPT;
+
     public GPTHandler(String speech,
                       TextView userQuestionConfirmTextView,
                       Button userQuestionConfirmButtonYes,
                       Button userQuestionConfirmButtonNo,
-                      Context context) {
+                      Context context, TextView answerFromGPT) {
         this.speech = speech;
         retrieveApiKeyFromFirebase();
         this.userQuestionConfirmTextView = userQuestionConfirmTextView;
         this.userQuestionConfirmButtonYes = userQuestionConfirmButtonYes;
         this.userQuestionConfirmButtonNo = userQuestionConfirmButtonNo;
         this.context = context;
+        this.answerFromGPT = answerFromGPT;
     }
 
     private void retrieveApiKeyFromFirebase() {
@@ -75,6 +78,8 @@ public class GPTHandler {
                                 answer = response; // Save the response
 
                             }
+
+
 
                             @Override
                             public void onError(String error) {
@@ -148,6 +153,8 @@ public class GPTHandler {
 
             public void onResponse(Call call, Response response) throws IOException {
                 final String responseBody = response.body().string();
+
+
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -160,12 +167,19 @@ public class GPTHandler {
                                 if (message.has("content")) {
                                     String responseMessage = message.getString("content");
                                     listener.onResponse(responseMessage);
+                                    answerFromGPT.setText(responseMessage);
+
+
+
+
 
                                     userQuestionConfirmTextView.setVisibility(View.INVISIBLE);
                                     userQuestionConfirmButtonYes.setVisibility(View.INVISIBLE);
                                     userQuestionConfirmButtonNo.setVisibility(View.INVISIBLE);
                                     //TODO
                                     //Ask to play answer
+
+                                    showPromptDialog(responseMessage);
 
                                 } else {
                                     listener.onError("Missing 'content' field in JSON response");
@@ -177,9 +191,30 @@ public class GPTHandler {
                             e.printStackTrace();
                             listener.onError("Error parsing JSON response: " + e.getMessage());
                         }
+
+                    }
+
+                    private void showPromptDialog(String responseMessage) {
+                        // Show the prompt dialog
+                        PromptToReadAnswerFromGPT.showCustomDialog(context, responseMessage,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Handle Yes click
+                                        // For example: Start playing the answer
+                                    }
+                                },
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Handle No click
+                                    }
+                                });
                     }
                 });
-            }
+
+
+                }
         });
     }
 

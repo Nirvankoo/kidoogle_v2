@@ -9,8 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class PromptToReadAnswerFromGPT {
+
+    public static AlertDialog dialog; // Declare AlertDialog as a class variable
+
     public static void showCustomDialog(Context context,
-                                        DialogInterface.OnClickListener yesClickListener,
+                                        String responseBody, DialogInterface.OnClickListener yesClickListener,
                                         DialogInterface.OnClickListener noClickListener) {
         // Inflate custom layout
         View dialogView = LayoutInflater.from(context).inflate(R.layout.read_gpt_amswer_prompt, null);
@@ -23,10 +26,12 @@ public class PromptToReadAnswerFromGPT {
         // Set the message to the TextView
         promptTextView.setText("Do you want to play the response?");
 
-        // Create AlertDialog builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(dialogView);
-        AlertDialog dialog = builder.create();
+        // Create AlertDialog builder only if it's null
+        if (dialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(dialogView);
+            dialog = builder.create();
+        }
 
         // Set onClickListener to Yes and No buttons
         yesButton.setOnClickListener(new View.OnClickListener() {
@@ -52,5 +57,4 @@ public class PromptToReadAnswerFromGPT {
         // Show the dialog
         dialog.show();
     }
-
 }

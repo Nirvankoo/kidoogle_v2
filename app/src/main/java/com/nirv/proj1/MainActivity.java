@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         buildGoogleApiClient();
 
         signIn();
+        //startActivity(new Intent(MainActivity.this, SignUpMailPassActivity.class));
 
 
         // Add AuthStateListener to monitor authentication state changes

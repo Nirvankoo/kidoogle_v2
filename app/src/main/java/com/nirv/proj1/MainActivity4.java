@@ -106,7 +106,8 @@ public class MainActivity4 extends AppCompatActivity {
                 userQuestionConfirmTextView,
                 userQuestionConfirmButtonYes,
                 userQuestionConfirmButtonNo,
-                this); // Initialize GPTHandler
+                this,
+                answerFromGPT); // Initialize GPTHandler
 
         OnClickListenerUserQuestionConfirmButtons userQuestionConfirmButtons = new OnClickListenerUserQuestionConfirmButtons(
                 userQuestionConfirmButtonYes,
